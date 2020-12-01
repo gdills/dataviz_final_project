@@ -34,3 +34,58 @@ Make sure to include a copy of the dataset in the `data/` folder, and reference 
 - [FL Poly News 2019](https://github.com/reisanar/datasets/blob/master/poly_news_FL19.csv)
 
 (to get the "raw" data from any of the links listed above, simply click on the `raw` button of the GitHub page and copy the URL to be able to read it in your computer using the `read_csv()` function)
+
+
+```{r}
+library(tidyverse)
+library(tidytext)
+```
+
+
+
+
+```{r}
+getwd()
+```
+
+
+
+```{r}
+# Reading in rate my professor data from Mendeley. This dataset is shared by Dr. Jibo HE, founder of the USEE Eye Tracking Inc.  and professor of Tsinghua University."https://data.mendeley.com/datasets/fvtfjyvw7d/2"
+
+professor <- read_csv("C:/Users/Greg_Dills/Desktop/School/Data_Visualization/final_project_repo/dataviz_final_project/data/RateMyProfessor_Sample data.csv")
+
+head(professor)
+```
+```{r}
+# Better understanding the number of rows of data
+nrow(professor)
+```
+
+
+
+```{r}
+professor_df <- tibble(line = 1:18, text = professor$`comments`)
+```
+
+
+
+```{r}
+tidy_professor <- professor_df %>%
+                  unnest_tokens(word, text) %>%
+    filter(!word %in% stop_words$word,str_detect(word, "[a-z]")) %>% 
+                  anti_join(stop_words) %>% 
+                  count(word, sort = TRUE)
+```
+
+```{r}
+head(tidy_professor)
+```
+
+
+
+```{r}
+library(wordcloud)
+wordcloud(words = tidy_professor$word, freq = tidy_professor$n, max.words = 150, random.order = FALSE, colors = brewer.pal(8, "Dark2"))
+```
+
