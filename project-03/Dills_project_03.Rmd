@@ -1,5 +1,6 @@
 ---
 title: "Visualizing Text and Distributions"
+author: "Greg Dills"
 output: 
 html_document:
 keep_md: true
@@ -52,6 +53,7 @@ getwd()
 
 ```{r}
 # Reading in rate my professor data from Mendeley. This dataset is shared by Dr. Jibo HE, founder of the USEE Eye Tracking Inc.  and professor of Tsinghua University."https://data.mendeley.com/datasets/fvtfjyvw7d/2"
+"He, Jibo (2020), “Big Data Set from RateMyProfessor.com for Professors' Teaching Evaluation”, Mendeley Data, V2, doi: 10.17632/fvtfjyvw7d.2"
 
 professor <- read_csv("C:/Users/Greg_Dills/Desktop/School/Data_Visualization/final_project_repo/dataviz_final_project/data/RateMyProfessor_Sample data.csv")
 
@@ -65,7 +67,7 @@ nrow(professor)
 
 
 ```{r}
-professor_df <- tibble(line = 1:18, text = professor$`comments`)
+professor_df <- tibble(line = 1:20000, text = professor$`comments`)
 ```
 
 
