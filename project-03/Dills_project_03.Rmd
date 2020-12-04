@@ -91,3 +91,63 @@ library(wordcloud)
 wordcloud(words = tidy_professor$word, freq = tidy_professor$n, max.words = 150, random.order = FALSE, colors = brewer.pal(8, "Dark2"))
 ```
 
+
+```{r}
+professor_stopwords <- c("class" , "professor" , "teacher" , "time" , "don" , "lectures" , "lot")
+
+tidy_professor2 <- professor_df %>%
+                  unnest_tokens(word, text) %>%
+    filter(!word %in% stop_words$word,str_detect(word, "[a-z]")) %>% 
+    filter(!word %in% professor_stopwords,str_detect(word, "[a-z]")) %>% 
+                  anti_join(stop_words) %>% 
+                  count(word, sort = TRUE)
+
+```
+
+```{r warning=FALSE}
+wordcloud(words = tidy_professor2$word, freq = tidy_professor2$n, max.words = 150, random.order = FALSE, colors = brewer.pal(8, "Dark2"))
+```
+
+
+```{r}
+library(tidytext)
+professor_words <- professor %>% 
+  unnest_tokens(word, comments)
+head(professor_words)
+```
+
+
+```{r}
+professor_stopwords <- professor %>% 
+    unnest_tokens(word, comments, token = "words") %>%
+  filter(!word %in% stop_words$word,str_detect(word, "[a-z]"))
+```
+
+
+
+```{r}
+professor_stopwords %>% 
+  group_by(word) %>% 
+  summarise(uses = n()) %>% 
+  arrange(desc(uses))
+```
+
+
+```{r}
+professor_stopwords %>% 
+  inner_join(get_sentiments("bing")) %>%
+  count(professor_name, sentiment) %>%
+  spread(sentiment, n, fill = 0) %>%
+  mutate(sentiment = positive - negative) %>% 
+  arrange(sentiment)
+
+```
+
+
+```{r}
+bad_professor <- professor %>% 
+  filter(professor_name == "Daniel  Vona")
+
+head(bad_professor)
+```
+
