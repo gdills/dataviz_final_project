@@ -2,9 +2,8 @@
 title: "Visualizing Text and Distributions"
 author: "Greg Dills"
 output: 
- html_document:
-  toc: true
-      toc_depth: 3
+ html_document
+
 ---
 
 
@@ -178,10 +177,23 @@ professor_stopwords %>%
 ```
 
 ```{r}
+# Here I am testing to see if the general consensus for John Baker is positive. Overall, yes his reviews are very positive.
+
 uab_good_professor <- professor %>% 
   select(comments, professor_name) %>% 
   filter(professor_name == "John  Baker")
 
 head(uab_good_professor)
+```
+
+
+```{r}
+# Wow, after looking at the comments, I can see how and why this professor would score badly in the sentiment analysis.
+
+uab_bad_professor <- professor %>% 
+  select(comments, professor_name) %>% 
+  filter(professor_name == "Jamie  Mills")
+
+head(uab_bad_professor)
 ```
 
