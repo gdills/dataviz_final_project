@@ -1,0 +1,176 @@
+---
+title: "Exploring Netflix Shows Data - Mini Project 1 - Revised"
+output: html_notebook
+author: "Greg Dills - `gregorydills0248@floridapoly.edu`"
+---
+
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+netflix_shows <- read_csv("https://raw.githubusercontent.com/reisanar/datasets/master/netflixShows.csv")
+
+```
+
+```{r}
+write.csv(netflix_shows, file = "C:/Users/Greg_Dills/Desktop/School/Data_Visualization/Data_Viz_Project_1/data/netflix_shows.csv", row.names = FALSE)
+```
+
+
+```{r}
+head(netflix_shows)
+```
+
+
+
+```{r}
+# Understanding shows rated TV-MA and the ratings in 2016
+
+netflix_shows %>% 
+   filter(`release year` == "2016") %>% 
+  select(title, rating, `user rating score`) %>% 
+   filter(rating == "TV-MA") %>% 
+  arrange(desc(`user rating score`))
+```
+
+
+
+## Using functions from `dplyr` package to summarize the data 
+
+
+```{r}
+## Displaying the average score per release year, sorting by the avg rating score. Appears that 2017 release year has the average highest rating score.
+
+netflix_years <- netflix_shows %>% 
+  select(`release year`, `user rating score`) %>%
+  group_by(`release year`) %>%
+  summarize(avg_rating_score = mean(`user rating score`, na.rm = TRUE)) %>% 
+  arrange(desc(avg_rating_score))
+head(netflix_years)
+```
+
+
+```{r}
+# Testing to see why some years show as NaN, simply no user rating score in the data.
+
+netflix_shows_76 <- netflix_shows %>% 
+  filter(`release year` ==  "1991")
+netflix_shows_76
+```
+
+
+```{r}
+## Wanting to get a better idea of the distribution of number of movies by release year, 2016 has a lot more than other years. This is most likely due to Netflix original content being pushed.
+
+netflix_shows_count <- netflix_shows %>% 
+  group_by(`release year`) %>% 
+  filter(`release year` >= 1975) %>% 
+ count() %>% 
+  arrange(desc(`release year`))
+netflix_shows_count
+```
+
+
+## First Plot: Exploring number of titles by release year
+
+```{r}
+
+# This plot helps to paint the picture of 2016 release year having a lot more titles compared to other years. Definitely a case of Netflix pushing original content throughout the year. By excluding the few titles with release years prior to 1975, we are able to see the volume of titles by release year more clearly.
+
+number_of_titles_by_year <-
+  ggplot(data=netflix_shows_count, aes(`release year`, y=n)) +
+  geom_area(color = "red") +
+  geom_point(color = "grey") +
+  labs(y = "Number of Titles", x = "Release Year",
+       title = "Netflix titles by Year of Release") +
+  theme_light()
+
+number_of_titles_by_year
+
+```
+
+
+
+
+```{r}
+## Displaying the average score per rating type, sorting by the avg rating score. Very interesting to see the rating types such as TV-MA and R get a higher average score. Most likely due to adults giving the rating?
+
+netflix_years_rating <- netflix_shows %>% 
+  select(`rating`, `user rating score`) %>%
+  group_by(`rating`) %>%
+  summarize(avg_rating_score = mean(`user rating score`, na.rm = TRUE)) %>% 
+  arrange(desc(avg_rating_score))
+head(netflix_years_rating,30)
+```
+## Second Plot: Understanding which ratings have the highest user scores
+
+```{r}
+
+# In this bar plot we can confirm that TV-MA, R and NR titles have the highest rating score. My hypothesis is that this is due to majority of adults perform the rating and thus, will rate based on their individual preference, not that of a child's perception for TV-G or G rated movies.
+
+ggplot(netflix_years_rating, aes(x = reorder(rating, avg_rating_score), y = avg_rating_score)) +
+  geom_bar(stat='identity', fill = "light blue") +
+  coord_flip() +
+  labs(y = "Average Rating Score", x = "Rating") +
+  theme_minimal()
+```
+
+## Third Plot: User Rating score distribution by rating type
+
+```{r}
+# Very interesting to see the distribution of all ratings by rating type. It appears that users can be passionate about children shows (G, TV-G)
+
+ggplot(netflix_shows, aes(x = rating, y = `user rating score`, fill = rating)) +
+  geom_boxplot() +
+  labs(x = "Rating", y = "Average Rating Score",
+       title = "User Score Distribution") +
+  theme(legend.position = "none")
+```
+
+
+## Write Up
+
+### Original Plan:
+
+After deciding to use Netflix data because who doesn't like Netflix?! And profiling the data with `glimpse` I realized that many of the plots to be created would be distribution plots. What I didn't expect, was that I would be curious to know the title count by year. The first plot helps to tell the story of just how many titles in 2016 relative to the other release years.
+
+
+### Story to tell:
+
+The story that can be gathered from my plots includes:
+
+ - 2016 release year having the most titles
+ - TV-MA, R and other "higher" ratings, have the highest user rating score (could be due to adults performing the rating, they will rate content they watch?)
+ - There is more variation in the scores for G and TV-G ratings (most likely due to people loving the kids shows or hating it, if the user performing the rating is an adult)
+
+
+### Principles Applied:
+
+Throughout this exercise, I made it a point to pay attention to the plots. Specifically, my use of color, labels and generally how the plot is perceived. Typically, I don't spend as much time on these details, but the assignments throughout this course thus far have taught me to slow down and study the details.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
