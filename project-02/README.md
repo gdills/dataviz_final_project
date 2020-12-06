@@ -7,6 +7,11 @@ output:
     df_print: paged
 ---
 
+**Update - 12-6-2020**
+
+- Created subtitles on the `Project Report` RMD file
+
+
 Originally, I knew I would be generating spatial visualizations with the lake shape file data. Fortunately, I did not need to clean the data in order to create spatial visualizations. I quickly determined that the lake spatial data alone would be very difficult to work with for anything other than distributions by county. There is simply not enough features in the data set to derive much insight. I overcame this by searching for relevant data at the county level. I ultimately stumbled upon population data for each Florida County. By summarizing the average perimeter for each County and joining the two data sets (lake shape file and population), I could then create a scatter plot to see whether there was any relationship between the average lake size per county and the estimated population.
 
 Once I got started analyzing this data, I realized I would need additional data points in order to ask a question about the data. This lead me to finding population data which helped in creating a linear model. Many of the ggplot2 functions are becoming easier, however I took longer than I would have liked on understanding and figuring out annotations. 

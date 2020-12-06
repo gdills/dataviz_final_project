@@ -1,7 +1,7 @@
 ---
-title: "Data Visualization Mini-Project 2 R Notebook"
+title: "Data Visualization Mini-Project 2 R Notebook Revised"
 author: "Greg Dills - gregorydills0248@floridapoly.edu"
-date: "11/19/2020"
+date: "12/06/2020"
 output:
   html_document:
     df_print: paged
@@ -27,6 +27,7 @@ getwd()
 ```{r}
 fl_lakes <- read_sf("C:/Users/Greg_Dills/Desktop/School/Data_Visualization/final_project_repo/dataviz_final_project/data/Florida_Lakes/Florida_Lakes/Florida_Lakes.shp")
 
+
 ```
 
 
@@ -37,15 +38,9 @@ fl_lakes <- read_sf("C:/Users/Greg_Dills/Desktop/School/Data_Visualization/final
 
 head(fl_lakes)
 ```
-## Results {.tabset}
 
-## Trying to better understand the data in the .zip file. Neat to see a dbf file type and what it consists of (similar to the shapefile in this case)
 
-```{r}
-
-library(foreign)
-read.dbf("C:/Users/Greg_Dills/Desktop/School/Data_Visualization/final_project_repo/dataviz_final_project/data/Florida_Lakes/Florida_Lakes/Florida_Lakes.dbf")
-```
+## Dataset Summary
 
 ```{r}
 summary(fl_lakes)
@@ -66,7 +61,7 @@ summarize(Average_Perimeter = mean(PERIMETER), Total_Lakes = n())
 head(fl_lakes_summary)
 ```
 
-
+## Data Exploration
 
 
 ```{r}
@@ -75,6 +70,8 @@ head(fl_lakes_summary)
 fl_lakes_summary %>% 
     arrange(desc(Average_Perimeter))
 ```
+
+
 
 [Link to "The Cutoff" lake visual](https://geodata.dep.state.fl.us/datasets/97b765ff2b70400d8bcab23fbe2a5e88_0/data?geometry=-81.214%2C25.183%2C-80.567%2C25.400&where=NAME%20%3D%20%27The%20Cutoff%27)
 
@@ -85,6 +82,9 @@ fl_lakes_summary %>%
 fl_lakes %>% 
   filter(COUNTY == "MONROE")
 ```
+
+## Interactive Bar Plot
+
 
 ```{r}
 # Creating an interactive bar plot to explore which counties have the largest (on average) lakes.
@@ -105,14 +105,14 @@ ggplotly(bar_plot)
 
 ```
 
-
+## Plotting the lake shapefiles
 
 ```{r}
 # Using the sf package to plot all lake shapes within the data file. By not having any filters, we can clearly see these lakes are in Florida.
 
 plot(st_geometry(fl_lakes))
 ```
-
+## Filtering for just Polk County, FL
 
 ```{r}
 # I would like to dig deeper and view only lakes in Polk County, FL. This is great, but without a point of reference it is difficult to know where these lakes are located.
@@ -130,17 +130,16 @@ polk_basemap %>% addTiles()
 ```
 
 
-
+## Comparing Lake size to Population
 
 
 ```{r}
 # Having the lake data by itself is great for projections, however, it would be interesting to explore whether or not there is a relationship between the average lake perimeter (in meters) vs the estimated population for each Florida County. To do this I found data here (https://www.bebr.ufl.edu/population/data) and even though I did not tidy the data in R (I need to practice data wrangling techniques again!), I was able to quickly get the data into a manageable format in Excel.
 
 
-## <- read_excel("C:/Users/Greg_Dills/Desktop/School/Data_Visualization/Data_Viz_Project_2/Data_Viz_Pro2/data/estimates_2020_table1_tidy.xlsx")
 
 library(readxl)
-fl_county_population <- read_excel("data/estimates_2020_table1_tidy.xlsx")
+fl_county_population <- read_excel("C:/Users/Greg_Dills/Desktop/School/Data_Visualization/final_project_repo/dataviz_final_project/data/estimates_2020_table1_tidy.xlsx")
 ```
 
 ```{r}
@@ -161,6 +160,7 @@ fl_lakes_pop %>%
           filter(COUNTY == "POLK")
 ```
 
+## Analyzing Estimated Florida Population and Lake Size Correlation
 
 
 ```{r message=FALSE, warning=FALSE}
