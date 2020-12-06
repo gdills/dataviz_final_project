@@ -9,7 +9,7 @@ output:
 **Some recommendations to explore:**
 
 ***
--	Perhaps add an executive summary to a README.md (Markdown) file. You can also include 1-2 plots saved from the ones you created with ggplot2 here. 
+-	Perhaps add an executive summary to a README.md (Markdown) file. You can also include 1-2 plots saved from the ones you created with ggplot2 here. **Will add comments to the final README and saved the plots as png files.**
 -	You can work with the R-chunks of code to customize them in such a way that you have control of how the output is displayed (for example, message = FALSE will not print the “Parsed with column specification:” message when the .csv is read **Removed uneccessary message from some of the R-chunks**
 -	I noticed you saved a copy to a local folder in your computer (using write.csv() ). When using projects (.Rproj), you can improve reproducibility by having everything “local” – that’s the reason for the data/ folder. This way anyone (include a future you) can re-run the analysis without having to modify that path to your C:/Users/… folder **I now understand the concept of keeping the data and the report "together" for reproducibility**
 -	I noticed the last chart did not use the same “theme” than the previous two. Consider choosing one for consistency **I corrected this**
@@ -79,6 +79,8 @@ netflix_shows_count
 ```
 
 
+
+
 ## First Plot: Exploring number of titles by release year
 
 ```{r}
@@ -121,6 +123,7 @@ ggplot(netflix_years_rating, aes(x = reorder(rating, avg_rating_score), y = avg_
   coord_flip() +
   labs(y = "Average Rating Score", x = "Rating") +
   theme_minimal()
+
 ```
 
 ## Third Plot: User Rating score distribution by rating type

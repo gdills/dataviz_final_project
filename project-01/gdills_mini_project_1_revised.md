@@ -6,23 +6,26 @@ output:
     df_print: paged
 ---
 
+**Some recommendations to explore:**
+
+***
+-	Perhaps add an executive summary to a README.md (Markdown) file. You can also include 1-2 plots saved from the ones you created with ggplot2 here. **Will add comments to the final README and saved the plots as png files.**
+-	You can work with the R-chunks of code to customize them in such a way that you have control of how the output is displayed (for example, message = FALSE will not print the “Parsed with column specification:” message when the .csv is read **Removed uneccessary message from some of the R-chunks**
+-	I noticed you saved a copy to a local folder in your computer (using write.csv() ). When using projects (.Rproj), you can improve reproducibility by having everything “local” – that’s the reason for the data/ folder. This way anyone (include a future you) can re-run the analysis without having to modify that path to your C:/Users/… folder **I now understand the concept of keeping the data and the report "together" for reproducibility**
+-	I noticed the last chart did not use the same “theme” than the previous two. Consider choosing one for consistency **I corrected this**
+
+***
+
 
 ```{r}
 library(tidyverse)
 ```
 
+`
+
 
 ```{r}
 netflix_shows <- read_csv("https://raw.githubusercontent.com/reisanar/datasets/master/netflixShows.csv")
-
-```
-
-```{r}
-write.csv(netflix_shows, file = "C:/Users/Greg_Dills/Desktop/School/Data_Visualization/Data_Viz_Project_1/data/netflix_shows.csv", row.names = FALSE)
-```
-
-
-```{r}
 head(netflix_shows)
 ```
 
@@ -76,6 +79,8 @@ netflix_shows_count
 ```
 
 
+
+
 ## First Plot: Exploring number of titles by release year
 
 ```{r}
@@ -118,6 +123,7 @@ ggplot(netflix_years_rating, aes(x = reorder(rating, avg_rating_score), y = avg_
   coord_flip() +
   labs(y = "Average Rating Score", x = "Rating") +
   theme_minimal()
+
 ```
 
 ## Third Plot: User Rating score distribution by rating type
@@ -129,7 +135,8 @@ ggplot(netflix_shows, aes(x = rating, y = `user rating score`, fill = rating)) +
   geom_boxplot() +
   labs(x = "Rating", y = "Average Rating Score",
        title = "User Score Distribution") +
-  theme(legend.position = "none")
+  theme(legend.position = "none") + 
+  theme_minimal()
 ```
 
 
