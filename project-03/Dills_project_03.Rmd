@@ -2,12 +2,12 @@
 title: "Visualizing Text and Distributions"
 author: "Greg Dills"
 output: 
-html_document:
-keep_md: true
-toc: true
-toc_float: true
- 
+ html_document:
+  toc: true
+      toc_depth: 3
 ---
+
+
 
 # Data Visualization Project 03
 
@@ -55,7 +55,7 @@ getwd()
 # Reading in rate my professor data from Mendeley. This dataset is shared by Dr. Jibo HE, founder of the USEE Eye Tracking Inc.  and professor of Tsinghua University."https://data.mendeley.com/datasets/fvtfjyvw7d/2"
 "He, Jibo (2020), “Big Data Set from RateMyProfessor.com for Professors' Teaching Evaluation”, Mendeley Data, V2, doi: 10.17632/fvtfjyvw7d.2"
 
-professor <- read_csv("C:/Users/Greg_Dills/Desktop/School/Data_Visualization/final_project_repo/dataviz_final_project/data/RateMyProfessor_Sample data.csv")
+professor <- read_csv("https://raw.githubusercontent.com/gdills/dataviz_final_project/main/data/RateMyProfessor_Sample%20data.csv")
 
 head(professor)
 ```
@@ -136,7 +136,7 @@ professor_stopwords %>%
 ```{r}
 professor_stopwords %>% 
   inner_join(get_sentiments("bing")) %>%
-  count(professor_name, sentiment) %>%
+  count(professor_name, school_name, sentiment) %>%
   spread(sentiment, n, fill = 0) %>%
   mutate(sentiment = positive - negative) %>% 
   arrange(sentiment)
@@ -151,4 +151,37 @@ bad_professor <- professor %>%
 head(bad_professor)
 ```
 
+
+
+```{r}
+professor %>% 
+  group_by(school_name) %>% 
+  summarize(number_of_professor_reviews = n()) %>% 
+  arrange(desc(number_of_professor_reviews))
+```
+
+
+
+
+```{r}
+professor_stopwords %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(professor_name, school_name,  sentiment) %>%
+  spread(sentiment, n, fill = 0) %>%
+  mutate(sentiment = positive - negative) %>% 
+  filter(school_name == "University of Alabama") %>% 
+  ggplot() + 
+  geom_bar(aes(x = reorder(professor_name, sentiment), y = sentiment), stat = "identity") + 
+  coord_flip() + 
+  labs(x = "", title = "Sentiment Analysis of Professor Reviews", 
+       subtitle = "Professors from the University of Alabama")
+```
+
+```{r}
+uab_good_professor <- professor %>% 
+  select(comments, professor_name) %>% 
+  filter(professor_name == "John  Baker")
+
+head(uab_good_professor)
+```
 
