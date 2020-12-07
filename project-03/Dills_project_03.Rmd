@@ -1,65 +1,51 @@
 ---
-title: "Visualizing Text and Distributions"
+title: "Visualizing Text - Rate my Professor Data"
 author: "Greg Dills"
-output: 
- html_document
-
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+      theme: lumen
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 
-# Data Visualization Project 03
+## Packages used
 
-
-In this exercise you will explore methods to visualize text data and practice how to recreate charts that show the distributions of a continuous variable. 
-
-
-I decided to work on text mining techniques for Project 3.
-
-
-## Part 2: Visualizing Text Data
-
-Review the set of slides (and additional resources linked in it) for visualizing text data: https://www.reisanar.com/slides/text-viz#1
-
-Choose any dataset with text data, and create at least one visualization with it. For example, you can create a frequency count of most used bigrams, a sentiment analysis of the text data, a network visualization of terms commonly used together, and/or a visualization of a topic modeling approach to the problem of identifying words/documents associated to different topics in the text data you decide to use. 
-
-Make sure to include a copy of the dataset in the `data/` folder, and reference your sources if different from the ones listed below:
-
-- [Billboard Top 100 Lyrics](https://github.com/reisanar/datasets/blob/master/BB_top100_2015.csv)
-
-- [RateMyProfessors comments](https://github.com/reisanar/datasets/blob/master/rmp_wit_comments.csv)
-
-- [FL Poly News 2020](https://github.com/reisanar/datasets/blob/master/poly_news_FL20.csv)
-
-- [FL Poly News 2019](https://github.com/reisanar/datasets/blob/master/poly_news_FL19.csv)
-
-(to get the "raw" data from any of the links listed above, simply click on the `raw` button of the GitHub page and copy the URL to be able to read it in your computer using the `read_csv()` function)
-
-
-```{r}
+```{r message=FALSE, warning=FALSE}
+library(rmarkdown)
 library(tidyverse)
 library(tidytext)
+library(wordcloud)
 ```
 
+***
 
+## Reading and better understanding the data {.tabset .tabset-fade .tabset-pills}
 
+### Getting the data from my Github Repo
+
+Reading in rate my professor data from Mendeley. This dataset is shared by Dr. Jibo HE, founder of the USEE Eye Tracking Inc.  and professor of Tsinghua University."https://data.mendeley.com/datasets/fvtfjyvw7d/2"
 
 ```{r}
-getwd()
-```
 
-
-
-```{r}
-# Reading in rate my professor data from Mendeley. This dataset is shared by Dr. Jibo HE, founder of the USEE Eye Tracking Inc.  and professor of Tsinghua University."https://data.mendeley.com/datasets/fvtfjyvw7d/2"
 "He, Jibo (2020), “Big Data Set from RateMyProfessor.com for Professors' Teaching Evaluation”, Mendeley Data, V2, doi: 10.17632/fvtfjyvw7d.2"
 
 professor <- read_csv("https://raw.githubusercontent.com/gdills/dataviz_final_project/main/data/RateMyProfessor_Sample%20data.csv")
 
 head(professor)
 ```
+### Setting the dataframe up to use text analysis
+
+
+A decent amount of observations to work with.
+
 ```{r}
-# Better understanding the number of rows of data
 nrow(professor)
 ```
 
@@ -78,18 +64,28 @@ tidy_professor <- professor_df %>%
                   anti_join(stop_words) %>% 
                   count(word, sort = TRUE)
 ```
+Many of these words don't have much "feeling" or meaning to them when it comes to understanding how students feel about their professors.
 
 ```{r}
 head(tidy_professor)
 ```
 
+***
 
+## Wordclouds {.tabset .tabset-fade .tabset-pills}
+
+### First word cloud
+
+This word cloud is great for exploratory analysis with the words and shows that many of these words should be filtered out. These words don't add enough context to the analysis. Words such as class, teacher, professor etc...
 
 ```{r}
-library(wordcloud)
+
 wordcloud(words = tidy_professor$word, freq = tidy_professor$n, max.words = 150, random.order = FALSE, colors = brewer.pal(8, "Dark2"))
 ```
 
+### Second word cloud
+
+Here, I am removing some of the stopwords that I deemed to not add value to the word cloud.
 
 ```{r}
 professor_stopwords <- c("class" , "professor" , "teacher" , "time" , "don" , "lectures" , "lot")
@@ -106,7 +102,11 @@ tidy_professor2 <- professor_df %>%
 ```{r warning=FALSE}
 wordcloud(words = tidy_professor2$word, freq = tidy_professor2$n, max.words = 150, random.order = FALSE, colors = brewer.pal(8, "Dark2"))
 ```
+***
 
+## Sentiment Analysis
+
+Separating individual words from the dataset.
 
 ```{r}
 library(tidytext)
@@ -116,13 +116,15 @@ head(professor_words)
 ```
 
 
+Removing stopwords
+
 ```{r}
 professor_stopwords <- professor %>% 
     unnest_tokens(word, comments, token = "words") %>%
-  filter(!word %in% stop_words$word,str_detect(word, "[a-z]"))
+     filter(!word %in% stop_words$word,str_detect(word, "[a-z]")) 
 ```
 
-
+Checking the word count for each individual word.
 
 ```{r}
 professor_stopwords %>% 
@@ -131,8 +133,10 @@ professor_stopwords %>%
   arrange(desc(uses))
 ```
 
+Displaying the negative vs positive relationship by implementing the bing lexicon. Very cool to see the ability to "score" someone with positive vs negative attributes.
 
 ```{r}
+
 professor_stopwords %>% 
   inner_join(get_sentiments("bing")) %>%
   count(professor_name, school_name, sentiment) %>%
@@ -142,15 +146,17 @@ professor_stopwords %>%
 
 ```
 
+Performing a quick check on the "worst" professor, according to the bing lexicon. Sure enough, there are plenty of negative comments.
 
 ```{r}
 bad_professor <- professor %>% 
+    select(comments, professor_name) %>% 
   filter(professor_name == "Daniel  Vona")
 
 head(bad_professor)
 ```
 
-
+Seeing which schools have the most comments. This will allow me to pick a few schools and plot the results
 
 ```{r}
 professor %>% 
@@ -160,7 +166,7 @@ professor %>%
 ```
 
 
-
+## Sentiment Analysis plot
 
 ```{r}
 professor_stopwords %>%
@@ -176,8 +182,10 @@ professor_stopwords %>%
        subtitle = "Professors from the University of Alabama")
 ```
 
+
+Here I am testing to see if the general consensus for John Baker is positive. Overall, yes his reviews are very positive.
 ```{r}
-# Here I am testing to see if the general consensus for John Baker is positive. Overall, yes his reviews are very positive.
+
 
 uab_good_professor <- professor %>% 
   select(comments, professor_name) %>% 
@@ -186,9 +194,10 @@ uab_good_professor <- professor %>%
 head(uab_good_professor)
 ```
 
+Wow, after looking at the comments, I can see how and why this professor would score badly in the sentiment analysis.
 
 ```{r}
-# Wow, after looking at the comments, I can see how and why this professor would score badly in the sentiment analysis.
+
 
 uab_bad_professor <- professor %>% 
   select(comments, professor_name) %>% 
@@ -197,3 +206,7 @@ uab_bad_professor <- professor %>%
 head(uab_bad_professor)
 ```
 
+
+## Conclusion and Next Steps
+
+I would like to explore this data set further. Really cool stuff, being able to analyze individual words from thousands of comments! Who knows, maybe this project could develop into a Shiny app or tool which allows prospective students to search a schools list of professors and dig down quickly into what other students have said about them? 
