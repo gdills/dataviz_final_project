@@ -1,8 +1,8 @@
 # Data Visualization and Reproducible Research
 
-> Firstname Lastname. 
+> Greg Dills. 
 
-Learn more about me in my [GitHub profile page](https://github.com/reiminer)
+Learn more about me in my [GitHub profile page](https://github.com/gdills)
 
 
 The following is a sample of products created during the _"Data Visualization and Reproducible Research"_ course in Fall 2020.
@@ -10,36 +10,33 @@ The following is a sample of products created during the _"Data Visualization an
 
 ## Project 01
 
-In the `project_01/` folder you can find... _[short description of your revised project goes here]_
+In the `project_01/` folder you can find an analysis of Netflix Shows and their corresponding user ratings. I created various plots to illustrate the distribution of user ratings and movie ratings.
 
 **Sample data visualization:** 
 
-_[include your favorite visualization from this project here]_
-<img src="https://github.com/reisanar/figs/raw/master/echarts.png" width="70%" height="70%">
+<img src="https://github.com/gdills/dataviz_final_project/raw/main/figures/user_score_distribution.png" width="70%" height="70%">
 
 
 
 
 ## Project 02
 
-In this project, I explored ... _[short description of your revised project goes here]_ Find the code and report in the `project_02/` folder.
+In this project, I explored Florida Lake Shape files and how the size of lakes may correlate to Florida County populations. Find the code and report in the `project_02/` folder.
 
 **Sample data visualization:** 
 
-_[include your favorite visualization from this project here]_
-<img src="https://github.com/reisanar/dataviz_final_project/blob/main/figures/fl_higher_ed.png" width="60%" height="60%">
 
-(you can also place your figures in the `figures/` folder and use the `![](path_to_picture)` option to add the pictures here)
+<img src="https://github.com/gdills/dataviz_final_project/raw/main/figures/lakes_vs_population2.png" width="60%" height="60%">
+
 
 
 ## Project 03
 
-In this project, I explored ... _[short description of your revised project goes here]_
+In this project, I explored comments from a rate my professor data set. Very interesting to perform text analysis on user comments. I ended up creating a bing sentiment analysis which compares individual professors at an institution.
 
 **Sample data visualization:** 
 
-_[include your favorite visualization from this project here]_
-<img src="https://github.com/reisanar/figs/raw/master/jackie_jessie_marion.png" width="80%" height="80%">
+<img src="https://github.com/gdills/dataviz_final_project/raw/main/figures/word_cloud_2.png" width="60%" height="60%">
 
 
 ### Moving Forward
