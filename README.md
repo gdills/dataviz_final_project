@@ -41,4 +41,8 @@ In this project, I explored comments from a rate my professor data set. Very int
 
 ### Moving Forward
 
-_add here a short reflection on what you learned and what you plan to continue exploring in terms of data visualization, data storytelling, reproducible research, and/or related topics_
+This course did an exceptional job teaching me the fundamentals of both `R` and proper visualization/reproducilbe research techniques. I believe the biggest takeaways are:
+
+* **Github:** Prior to this course I did not know much about Github and I am much more confident to utilize git.
+* **Markdown:** I can't get enough of markdown and enjoy using it (almost) daily.
+* **Psychology behind Visuals:** There is more to producing a plot than `ggplot %>% geom_bar...` This course helped me to understand the science behind producing great visuals. 
