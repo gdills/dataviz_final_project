@@ -3,6 +3,7 @@ title: "Visualizing Text - Rate my Professor Data"
 author: "Greg Dills"
 output:
   html_document:
+    keep_md: true
     toc: true
     toc_float:
       collapsed: false
@@ -102,7 +103,7 @@ tidy_professor2 <- professor_df %>%
 ```{r warning=FALSE}
 wordcloud(words = tidy_professor2$word, freq = tidy_professor2$n, max.words = 150, random.order = FALSE, colors = brewer.pal(8, "Dark2"))
 ```
-***
+
 
 ## Sentiment Analysis
 
