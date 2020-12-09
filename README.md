@@ -32,7 +32,7 @@ In this project, I explored Florida Lake Shape files and how the size of lakes m
 
 ## Project 03
 
-In this project, I explored comments from a rate my professor data set. Very interesting to perform text analysis on user comments. I ended up creating a bing sentiment analysis which compares individual professors at an institution.
+In this project, I explored comments from a rate my professor data set. Very interesting to perform text analysis on user comments. I ended up creating a bing sentiment analysis which compares individual professors at any given institution in the dataset.
 
 **Sample data visualization:** 
 
@@ -43,6 +43,6 @@ In this project, I explored comments from a rate my professor data set. Very int
 
 This course did an exceptional job teaching me the fundamentals of both `R` and proper visualization/reproducible research techniques. I believe the biggest takeaways are:
 
-* **Github:** Prior to this course I did not know much about Github and I am much more confident to utilize git.
-* **Markdown:** I can't get enough of markdown and enjoy using it (almost) daily.
-* **Psychology behind Visuals:** There is more to producing a plot than `ggplot %>% geom_bar...` This course helped me to understand the science behind producing great visuals. 
+>* **Github:** Prior to this course I did not know much about Github and I am much more confident to utilize the platform in future endeavors.
+>* **Markdown:** I can't get enough of markdown and enjoy using it at work (almost) daily.
+>* **Psychology behind Visuals:** There is more to producing a plot than `ggplot() + geom_bar()...` This course helped me to understand the science behind producing great visuals. 
