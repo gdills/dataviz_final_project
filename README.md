@@ -41,7 +41,7 @@ In this project, I explored comments from a rate my professor data set. Very int
 
 ### Moving Forward
 
-This course did an exceptional job teaching me the fundamentals of both `R` and proper visualization/reproducilbe research techniques. I believe the biggest takeaways are:
+This course did an exceptional job teaching me the fundamentals of both `R` and proper visualization/reproducible research techniques. I believe the biggest takeaways are:
 
 * **Github:** Prior to this course I did not know much about Github and I am much more confident to utilize git.
 * **Markdown:** I can't get enough of markdown and enjoy using it (almost) daily.
