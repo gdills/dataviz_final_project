@@ -3,6 +3,7 @@ title: "Visualizing Text - Rate my Professor Data"
 author: "Greg Dills"
 output:
   html_document:
+    keep_md: true
     toc: true
     toc_float:
       collapsed: false
