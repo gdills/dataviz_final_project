@@ -1,6 +1,6 @@
 # Data Visualization and Reproducible Research
 
-> Greg Dills. 
+> Greg Dills 
 
 Learn more about me in my [GitHub profile page](https://github.com/gdills)
 
