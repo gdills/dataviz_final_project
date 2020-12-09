@@ -4,6 +4,9 @@ author: "Greg Dills - gregorydills0248@floridapoly.edu"
 date: "12/06/2020"
 output:
   html_document:
+    keep_md: true
+    toc: true
+    toc_float: true
     df_print: paged
 ---
 

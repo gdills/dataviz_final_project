@@ -3,6 +3,9 @@ title: "Exploring Netflix Shows Data - Mini Project 1 - Revised"
 author: "Greg Dills - `gregorydills0248@floridapoly.edu`"
 output:
   html_document:
+    keep_md: true
+    toc: true
+    toc_float: true
     df_print: paged
 ---
 
@@ -29,10 +32,10 @@ netflix_shows <- read_csv("https://raw.githubusercontent.com/reisanar/datasets/m
 head(netflix_shows)
 ```
 
-
+## Understanding shows rated TV-MA and the ratings in 2016
 
 ```{r}
-# Understanding shows rated TV-MA and the ratings in 2016
+
 
 netflix_shows %>% 
    filter(`release year` == "2016") %>% 
@@ -45,9 +48,10 @@ netflix_shows %>%
 
 ## Using functions from `dplyr` package to summarize the data 
 
+Displaying the average score per release year, sorting by the avg rating score. Appears that 2017 release year has the average highest rating score.
 
 ```{r}
-## Displaying the average score per release year, sorting by the avg rating score. Appears that 2017 release year has the average highest rating score.
+
 
 netflix_years <- netflix_shows %>% 
   select(`release year`, `user rating score`) %>%
@@ -56,19 +60,20 @@ netflix_years <- netflix_shows %>%
   arrange(desc(avg_rating_score))
 head(netflix_years)
 ```
-
+Testing to see why some years show as NaN, simply no user rating score in the data.
 
 ```{r}
-# Testing to see why some years show as NaN, simply no user rating score in the data.
+
 
 netflix_shows_76 <- netflix_shows %>% 
   filter(`release year` ==  "1991")
 netflix_shows_76
 ```
 
+Wanting to get a better idea of the distribution of number of movies by release year, 2016 has a lot more than other years. This is most likely due to Netflix original content being pushed.
 
 ```{r}
-## Wanting to get a better idea of the distribution of number of movies by release year, 2016 has a lot more than other years. This is most likely due to Netflix original content being pushed.
+
 
 netflix_shows_count <- netflix_shows %>% 
   group_by(`release year`) %>% 
@@ -100,10 +105,10 @@ number_of_titles_by_year
 ```
 
 
-
+Displaying the average score per rating type, sorting by the avg rating score. Very interesting to see the rating types such as TV-MA and R get a higher average score. Most likely due to adults giving the rating?
 
 ```{r}
-## Displaying the average score per rating type, sorting by the avg rating score. Very interesting to see the rating types such as TV-MA and R get a higher average score. Most likely due to adults giving the rating?
+
 
 netflix_years_rating <- netflix_shows %>% 
   select(`rating`, `user rating score`) %>%
@@ -114,9 +119,11 @@ head(netflix_years_rating,30)
 ```
 ## Second Plot: Understanding which ratings have the highest user scores
 
+In this bar plot we can confirm that TV-MA, R and NR titles have the highest rating score. My hypothesis is that this is due to majority of adults perform the rating and thus, will rate based on their individual preference, not that of a child's perception for TV-G or G rated movies.
+
+
 ```{r}
 
-# In this bar plot we can confirm that TV-MA, R and NR titles have the highest rating score. My hypothesis is that this is due to majority of adults perform the rating and thus, will rate based on their individual preference, not that of a child's perception for TV-G or G rated movies.
 
 ggplot(netflix_years_rating, aes(x = reorder(rating, avg_rating_score), y = avg_rating_score)) +
   geom_bar(stat='identity', fill = "light blue") +
@@ -127,9 +134,9 @@ ggplot(netflix_years_rating, aes(x = reorder(rating, avg_rating_score), y = avg_
 ```
 
 ## Third Plot: User Rating score distribution by rating type
-
+Very interesting to see the distribution of all ratings by rating type. It appears that users can be passionate about children shows (G, TV-G)
 ```{r}
-# Very interesting to see the distribution of all ratings by rating type. It appears that users can be passionate about children shows (G, TV-G)
+
 
 ggplot(netflix_shows, aes(x = rating, y = `user rating score`, fill = rating)) +
   geom_boxplot() +
