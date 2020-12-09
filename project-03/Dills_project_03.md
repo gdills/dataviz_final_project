@@ -82,6 +82,7 @@ This word cloud is great for exploratory analysis with the words and shows that 
 
 wordcloud(words = tidy_professor$word, freq = tidy_professor$n, max.words = 150, random.order = FALSE, colors = brewer.pal(8, "Dark2"))
 ```
+<img src="https://github.com/gdills/dataviz_final_project/raw/main/figures/word_cloud_1.png" width="80%" style="display: block; margin: auto;" />
 
 ### Second word cloud
 
@@ -102,7 +103,7 @@ tidy_professor2 <- professor_df %>%
 ```{r warning=FALSE}
 wordcloud(words = tidy_professor2$word, freq = tidy_professor2$n, max.words = 150, random.order = FALSE, colors = brewer.pal(8, "Dark2"))
 ```
-
+<img src="https://github.com/gdills/dataviz_final_project/raw/main/figures/word_cloud_2.png" width="80%" style="display: block; margin: auto;" />
 
 ## Sentiment Analysis
 
@@ -181,7 +182,7 @@ professor_stopwords %>%
   labs(x = "", title = "Sentiment Analysis of Professor Reviews", 
        subtitle = "Professors from the University of Alabama")
 ```
-
+<img src="https://github.com/gdills/dataviz_final_project/raw/main/figures/sentiment_analysis.png" width="80%" style="display: block; margin: auto;" />
 
 Here I am testing to see if the general consensus for John Baker is positive. Overall, yes his reviews are very positive.
 ```{r}
